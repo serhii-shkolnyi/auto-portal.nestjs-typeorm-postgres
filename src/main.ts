@@ -5,7 +5,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 
 import { SwaggerHelper } from './common/helpers/swagger.helper';
 import { swaggerConfig } from './configs';
-import { apiConfig, AppConfig } from './configs/api-config.type';
+import { apiConfigType, AppConfig } from './configs/api-config.type';
 import { AppModule } from './modules/app.module';
 
 async function bootstrap() {
@@ -28,7 +28,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
-  const configService = app.get(ConfigService<apiConfig>);
+  const configService = app.get(ConfigService<apiConfigType>);
   const appConfig = configService.get<AppConfig>('app');
 
   await app.listen(appConfig.port, () => {

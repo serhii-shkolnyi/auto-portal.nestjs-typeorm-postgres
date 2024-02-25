@@ -1,4 +1,4 @@
-export type apiConfig = {
+export type apiConfigType = {
   app: AppConfig;
   postgres: PostgresConfig;
   redis: RedisConfig;
