@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule } from '@nestjs/swagger';
 
+import { GlobalException } from './common/exceptions/global.exception';
 import { SwaggerHelper } from './common/helpers/swagger.helper';
 import { swaggerConfig } from './configs';
 import { apiConfigType, AppConfig } from './configs/api-config.type';
@@ -21,6 +22,8 @@ async function bootstrap() {
     },
   });
 
+  app.useGlobalFilters(new GlobalException());
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -28,6 +31,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
   const configService = app.get(ConfigService<apiConfigType>);
   const appConfig = configService.get<AppConfig>('app');
 
