@@ -1,8 +1,9 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
 
 import { CommonEntity } from './common.entity';
 import { ETableName } from './enums/table-name.enum';
 import { ShowroomEntity } from './showroom.entity';
+import { UserEntity } from './user.entity';
 
 @Entity(ETableName.ROLE)
 export class RoleEntity extends CommonEntity {
@@ -11,7 +12,10 @@ export class RoleEntity extends CommonEntity {
 
   @Column('text')
   showroom_id: string;
-  @ManyToOne(() => ShowroomEntity, (entity) => entity.showroom)
+  @ManyToOne(() => ShowroomEntity, (entity) => entity.roles)
   @JoinColumn({ name: 'showroom_id' })
-  showroom: ShowroomEntity;
+  showroom?: ShowroomEntity;
+
+  @ManyToMany(() => UserEntity, (entity) => entity.roles)
+  users?: UserEntity[];
 }
