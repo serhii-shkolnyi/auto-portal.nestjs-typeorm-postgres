@@ -1,9 +1,9 @@
-import { apiConfigType } from './api-config.type';
+import { apiConfigType } from "./api-config.type";
 
 export default (): apiConfigType => ({
   app: {
     port: parseInt(process.env.APP_PORT) || 3000,
-    host: process.env.APP_HOST || '0.0.0.0',
+    host: process.env.APP_HOST || "0.0.0.0",
   },
   postgres: {
     host: process.env.POSTGRES_HOST,

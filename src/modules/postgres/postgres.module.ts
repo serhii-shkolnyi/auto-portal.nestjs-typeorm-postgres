@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { PostgresService } from './postgres.service';
+import { PostgresService } from "./postgres.service";
 
 @Module({
   imports: [

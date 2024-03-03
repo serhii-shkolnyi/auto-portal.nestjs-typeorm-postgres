@@ -1,21 +1,21 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
-import { CommonEntity } from './common.entity';
-import { ETableName } from './enums/table-name.enum';
-import { ShowroomEntity } from './showroom.entity';
-import { UserEntity } from './user.entity';
+import { CommonEntity } from "./common.entity";
+import { ETableName } from "./enums/table-name.enum";
+import { ShowroomEntity } from "./showroom.entity";
+import { UserRoleEntity } from "./user&role.entity";
 
 @Entity(ETableName.ROLE)
 export class RoleEntity extends CommonEntity {
-  @Column('text')
+  @Column("text")
   role: string;
 
-  @Column('text')
+  @Column("text")
   showroom_id: string;
   @ManyToOne(() => ShowroomEntity, (entity) => entity.roles)
-  @JoinColumn({ name: 'showroom_id' })
+  @JoinColumn({ name: "showroom_id" })
   showroom?: ShowroomEntity;
 
-  @ManyToMany(() => UserEntity, (entity) => entity.roles)
-  users?: UserEntity[];
+  @OneToMany(() => UserRoleEntity, (entity) => entity.role)
+  roleId: UserRoleEntity[];
 }

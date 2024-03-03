@@ -1,21 +1,21 @@
-import * as path from 'node:path';
+import * as path from "node:path";
 
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import {
   TypeOrmModuleOptions,
   TypeOrmOptionsFactory,
-} from '@nestjs/typeorm/dist/interfaces/typeorm-options.interface';
+} from "@nestjs/typeorm/dist/interfaces/typeorm-options.interface";
 
-import { apiConfigType, PostgresConfig } from '../../configs/api-config.type';
+import { apiConfigType, PostgresConfig } from "../../configs/api-config.type";
 
 @Injectable()
 export class PostgresService implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService<apiConfigType>) {}
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const postgresConfig = this.configService.get<PostgresConfig>('postgres');
+    const postgresConfig = this.configService.get<PostgresConfig>("postgres");
     return {
-      type: 'postgres',
+      type: "postgres",
       host: postgresConfig.host,
       port: postgresConfig.port,
       username: postgresConfig.user,
@@ -24,21 +24,21 @@ export class PostgresService implements TypeOrmOptionsFactory {
       entities: [
         path.join(
           process.cwd(),
-          'dist',
-          'src',
-          'database',
-          'entities',
-          '*.entity.js',
+          "dist",
+          "src",
+          "database",
+          "entities",
+          "*.entity.js",
         ),
       ],
       migrations: [
         path.join(
           process.cwd(),
-          'dist',
-          'src',
-          'database',
-          'migrations',
-          '*.js',
+          "dist",
+          "src",
+          "database",
+          "migrations",
+          "*.js",
         ),
       ],
       migrationsRun: true,

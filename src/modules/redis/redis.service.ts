@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Redis } from 'ioredis';
+import { Inject, Injectable } from "@nestjs/common";
+import { Redis } from "ioredis";
 
 @Injectable()
 export class RedisService {
   constructor(
-    @Inject('REDIS_PROVIDER')
+    @Inject("REDIS_PROVIDER")
     private readonly redisClient: Redis,
   ) {}
 

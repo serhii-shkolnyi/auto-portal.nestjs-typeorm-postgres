@@ -1,6 +1,6 @@
-import { Global, Module } from '@nestjs/common';
+import { Global, Module } from "@nestjs/common";
 
-import { ShowroomRepository } from './repositories/showroom.repository';
+import { ShowroomRepository } from "./repositories/showroom.repository";
 
 const repositories = [ShowroomRepository];
 

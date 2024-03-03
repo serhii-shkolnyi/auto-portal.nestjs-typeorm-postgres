@@ -1,20 +1,20 @@
-import { OpenAPIObject } from '@nestjs/swagger/dist/interfaces';
+import { OpenAPIObject } from "@nestjs/swagger/dist/interfaces";
 
-const pathMethods = ['get', 'post', 'put', 'patch', 'delete'] as const;
+const pathMethods = ["get", "post", "put", "patch", "delete"] as const;
 
 const generalResponses = {
-  404: { description: 'Not found' },
-  422: { description: 'Unprocessable entity' },
-  500: { description: 'Server error' },
+  404: { description: "Not found" },
+  422: { description: "Unprocessable entity" },
+  500: { description: "Server error" },
 };
 
 const authResponses = {
-  401: { description: 'Not authenticated' },
-  403: { description: 'Access denied' },
+  401: { description: "Not authenticated" },
+  403: { description: "Access denied" },
 };
 
 const deleteResponses = {
-  204: { description: 'No content' },
+  204: { description: "No content" },
 };
 
 // const mediaResponses = {
@@ -33,7 +33,7 @@ export class SwaggerHelper {
             Object.assign(route.responses, authResponses);
           }
 
-          if (method === 'delete') {
+          if (method === "delete") {
             delete route.responses[200];
             Object.assign(route.responses, deleteResponses);
           }
