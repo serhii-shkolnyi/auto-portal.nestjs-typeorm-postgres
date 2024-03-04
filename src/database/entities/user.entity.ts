@@ -12,8 +12,8 @@ export class UserEntity extends CommonEntity {
   @Column("text")
   userName: string;
 
-  @Column("int", { unique: true })
-  phone: number;
+  @Column("text", { unique: true })
+  phone: string;
 
   @Column("text", { unique: true })
   email: string;
