@@ -3,7 +3,9 @@ import * as bcrypt from "bcrypt";
 
 import { RefreshTokenRepository } from "../../repository/repositories/refresh-token.repository";
 import { RoleRepository } from "../../repository/repositories/role.repository";
+import { ShowroomRepository } from "../../repository/repositories/showroom.repository";
 import { UserRepository } from "../../repository/repositories/user.repository";
+import { UserRoleRepository } from "../../repository/repositories/user-role.repository";
 import { UserService } from "../../user/service/user.service";
 import { SignUpRequestDto } from "../dto/request/sign-up.request.dto";
 import { AuthUserResponseDto } from "../dto/response/auth-user.response.dto";
@@ -19,7 +21,9 @@ export class AuthService {
     private readonly authCacheService: AuthCacheService,
     private readonly roleRepository: RoleRepository,
     private readonly userRepository: UserRepository,
+    private readonly userRoleRepository: UserRoleRepository,
     private readonly refreshRepository: RefreshTokenRepository,
+    private readonly showroomRepository: ShowroomRepository,
   ) {}
 
   public async signUp(dto: SignUpRequestDto): Promise<AuthUserResponseDto> {
@@ -30,19 +34,30 @@ export class AuthService {
     const user = await this.userRepository.save(
       this.userRepository.create({ ...dto, password }),
     );
-    // const userRoleId = await this.userRepository.findOne({
-    //   where: { email: dto.email },
-    //   relations: { userId: true },
-    // });
-    const roleSellerId = await this.roleRepository.findOneBy({
+    const autoPortal = await this.showroomRepository.findOneBy({
+      showroom: "auto-portal",
+    });
+    const roleSeller = await this.roleRepository.findOneBy({
+      showroom_id: autoPortal.id,
       role: "seller",
     });
+    await this.userRoleRepository.save(
+      this.userRoleRepository.create({
+        userId: user.id,
+        roleId: roleSeller.id,
+      }),
+    );
 
     const tokens = await this.tokenService.generateAuthTokens({
       userId: user.id,
-      roleId: roleSellerId.id,
+      roleId: roleSeller.id,
     });
 
+    const userAndRole = await this.userRepository.findOne({
+      where: { id: "e1560d2f-1abf-4757-be91-92f274cfc325" },
+      relations: { userId: true },
+    });
+    console.log(userAndRole.userId);
     // await Promise.all([
     //   this.refreshRepository.saveToken(
     //     user.id,
